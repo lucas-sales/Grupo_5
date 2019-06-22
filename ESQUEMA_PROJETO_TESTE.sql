@@ -33,9 +33,9 @@ CREATE TABLE `teste_projeto`.`posto`(
 
 CREATE TABLE `teste_projeto`.`veiculo`(
     placa VARCHAR(7) NOT NULL,
-    marca,
-    modelo,
-    ano,
+    marca VARCHAR(12),
+    modelo VARCHAR(12),
+    ano VARCHAR(12),
     PRIMARY KEY(`placa`));
 
 CREATE TABLE `teste_projeto`.`abastecimento`(
