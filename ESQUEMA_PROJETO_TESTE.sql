@@ -31,8 +31,45 @@ CREATE TABLE `teste_projeto`.`posto`(
     telefone VARCHAR(12),
     PRIMARY KEY(`cnpj_posto`));
 
-ALTER TABLE `posto` ADD CONSTRAINT `fk_cod_regiao` FOREIGN KEY ( `cod_regiao` ) REFERENCES `Regiao` ( `cod_regiao` );
-ALTER TABLE `posto` ADD CONSTRAINT `fk_nome_bandeira` FOREIGN KEY ( `nome_bandeira` ) REFERENCES `bandeira` ( `nome_bandeira` );
+CREATE TABLE `teste_projeto`.`veiculo`(
+    placa VARCHAR(7) NOT NULL,
+    marca,
+    modelo,
+    ano,
+    PRIMARY KEY(`placa`));
+
+CREATE TABLE `teste_projeto`.`abastecimento`(
+    cod_operacao INT NOT NULL AUTO_INCREMENT,
+    data_hora DATE,
+    PRIMARY KEY(`cod_operacao`));
+
+CREATE TABLE `teste_projeto`.`cliente`(
+    cod_cliente INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(32),
+    PRIMARY KEY(`cod_cliente`));
+
+CREATE TABLE `teste_projeto`.`abastecimentoCombustivel`(
+    momento FLOAT NOT NULL AUTO_INCREMENT,
+    cod_operacao INT NOT NULL AUTO_INCREMENT,
+    preco FLOAT,
+    PRIMARY KEY(`momento`),
+    PRIMARY KEY(`cod_operacao`),
+    );
+
+CREATE TABLE `teste_projeto`.`tipoCombustivel`(
+    id_combustivel INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(32),
+    PRIMARY KEY(id_combustivel));
+
+
+ALTER TABLE `posto`                     ADD CONSTRAINT `fk_cod_regiao`      FOREIGN KEY ( `cod_regiao` )     REFERENCES `Regiao` ( `cod_regiao` );
+ALTER TABLE `posto`                     ADD CONSTRAINT `fk_nome_bandeira`   FOREIGN KEY ( `nome_bandeira` )  REFERENCES `bandeira` ( `nome_bandeira` );
+
+ALTER TABLE `abastecimento`             ADD CONSTRAINT `fk_cnpj_posto`      FOREIGN KEY ( `cnpj_posto` )     REFERENCES ´posto´ ( `cnpj_posto` );
+ALTER TABLE `abastecimento`             ADD CONSTRAINT `fk_matricula`       FOREIGN KEY ( `matricula` )      REFERENCES ´posto´ ( `matricula` );
+ALTER TABLE `abastecimento`             ADD CONSTRAINT `fk_placa`           FOREIGN KEY ( `placa` )          REFERENCES ´veiculo´ ( `placa` );
+
+ALTER TABLE `abastecimentoCombustivel`  ADD CONSTRAINT `fk_id_combustivel`  FOREIGN KEY ( `id_combustivel` ) REFERENCES ´tipoCombustivel´ ( `id_combustivel` );
 
 INSERT INTO `teste_projeto`.`funcionario` (`nome`, `dataNascimento`, `email`) VALUES
 ('João José', '1988-12-12', 'joao_jose@gmail.com'),
