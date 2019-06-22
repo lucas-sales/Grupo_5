@@ -1,4 +1,4 @@
-CREATE SCHEMA `teste_projeto`:
+CREATE SCHEMA `teste_projeto`;
 USE `teste_projeto`;
 
 CREATE TABLE `teste_projeto`.`funcionario` (
@@ -21,7 +21,7 @@ CREATE TABLE `teste_projeto`.`Regiao` (
 
 CREATE TABLE `teste_projeto`.`bandeira`(
     nome_bandeira VARCHAR(32) NOT NULL,
-    url,
+    url VARCHAR(32),
     PRIMARY KEY (`nome_bandeira`));
 
 CREATE TABLE `teste_projeto`.`posto`(
@@ -53,7 +53,7 @@ CREATE TABLE `teste_projeto`.`abastecimentoCombustivel`(
     cod_operacao INT NOT NULL AUTO_INCREMENT,
     preco FLOAT,
     PRIMARY KEY(`momento`),
-    PRIMARY KEY(`cod_operacao`),
+    PRIMARY KEY(`cod_operacao`)
     );
 
 CREATE TABLE `teste_projeto`.`tipoCombustivel`(
