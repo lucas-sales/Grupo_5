@@ -4,6 +4,6 @@ import pymysql.cursors
 connection = pymysql.connect(host='localhost',
                             user='root',
                             password='',
-                            db='teste_projeto',
+                            db='postodecombustivel',
                             charset='utf8mb4',
                             cursorclass=pymysql.cursors.DictCursor)
