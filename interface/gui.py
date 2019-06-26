@@ -7,7 +7,7 @@ class Gui:
     def __init__(self):
         self.BUTTON_PATH = '.'
         self.button_names_main = ('Abastecer', 'Registro', 'Close')
-        self.button_names_abs = ('Matricula', 'cliente', 'veiculo','combustivel', 'preço', 'Subtotal', 'Voltar')
+        self.button_names_abs = ('Matricula', 'Cliente', 'Veiculo','Combustivel', 'Preço', 'Subtotal', 'Voltar')
         self.button_names_regis = ()
         self.window = None
 
@@ -52,11 +52,39 @@ class Gui:
 
             button, value = self.window.Read()
             if button == 'Registro':
+                self.window.Close()
                 self.window = sg.Window('Posto LAR', location=(800, 600)).Layout(registroLayout)
 
             elif button == 'Abastecer':
+                self.window.Close()
                 self.window = sg.Window('Posto LAR', location=(800, 600)).Layout(abastecerLayout)
-                button, value = self.window.Read()
+
+            elif button == 'Matricula':
+                print("Aqui")
+
+            elif button == 'Cliente':
+                print("Aqui")
+
+            elif button == 'Veiculo':
+                print("Aqui")
+
+            elif button == 'Combustivel':
+                print("Aqui")
+
+            elif button == 'Preço':
+                print("Aqui")
+
+            elif button == 'SubTotal':
+                print("Aqui")
+
+            elif button == 'Voltar':
+                self.window.Close()
+                self.window = sg.Window('Posto LAR', location=(800, 600)).Layout(layout)
+
+            elif button == 'Close':
+                self.window.Close()
+                break
+
             else:
                 self.window.Close()
                 break
