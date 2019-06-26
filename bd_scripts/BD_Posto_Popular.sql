@@ -70,11 +70,11 @@ INSERT INTO Abastecimento(cnpj_posto, matricula, placa, data_hora) VALUES
 ('05134567891012', '014', 'XWZ4441', '2019-04-05 03:42:43'),
 ('01234567891011', '013', 'XYZ0901', '2019-04-12 02:12:04');
 
-INSERT INTO TipoCombustivel(nome) VALUES
-('Diesel'),
-('Gasolina'),
-('Etanol'),
-('Gás Natural');
+INSERT INTO TipoCombustivel(nome, preco) VALUES
+('Diesel', 10.2),
+('Gasolina', 9.82),
+('Etanol', 7.65),
+('Gás Natural', 12.80);
 
 INSERT INTO AbastecimentoCombustivel(momento, cod_operacao, id_combustivel, preco) VALUES
 ('2018-09-03 22:01:42', 1, 1, 9.88),

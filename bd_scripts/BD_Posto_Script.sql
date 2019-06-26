@@ -88,6 +88,7 @@ FOREIGN KEY (placa) REFERENCES Veiculo(placa)
 CREATE TABLE TipoCombustivel(
 id_combustivel INTEGER NOT NULL AUTO_INCREMENT,
 nome VARCHAR(20),
+preco DOUBLE,
 PRIMARY KEY (id_combustivel)
 );
 
