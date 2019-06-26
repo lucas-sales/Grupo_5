@@ -1,50 +1,65 @@
-from negocio import operacoes
-'''
-def main():
-    
-    print(operacoes.selectAllPosto())
+#from negocio import operacoes
 
-
-if __name__ == "__main__":
-    main()
-'''
 import PySimpleGUIQt as sg
 import os
 
 class Gui:
     def __init__(self):
         self.BUTTON_PATH = '.'
-        self.button_names = ('Create', 'Remove', 'Update', 'Delete', 'Close')
+        self.button_names_main = ('Abastecer', 'Registro', 'Close')
+        self.button_names_abs = ('Matricula', 'cliente', 'veiculo','combustivel', 'preço', 'Subtotal', 'Voltar')
+        self.button_names_regis = ()
         self.window = None
 
+    # toolbar_buttons
+    def configToobarBtn(self, lista_btn):
+
+        button_files = [os.path.join(self.BUTTON_PATH, b + '.png') for b in lista_btn]
+
+        toolbar_buttons = [[sg.RButton('{}'.format(lista_btn[i]), image_size=(32, 32), pad=(0, 0),
+                                       tooltip=lista_btn[i]) for i, f in enumerate(button_files)], ]
+        return toolbar_buttons
+
     def show(self):
-        button_files = [os.path.join(self.BUTTON_PATH, b + '.png') for b in self.button_names]
 
         sg.SetOptions(auto_size_buttons=True, margins=(0, 0), button_color=sg.COLOR_SYSTEM_DEFAULT)
 
-        toolbar_buttons = [[sg.RButton('{}'.format(self.button_names[i]), image_size=(32, 32), pad=(0, 0),
-                                       tooltip=self.button_names[i]) for i, f in enumerate(button_files)], ]
+        toolbar_buttons_init    = self.configToobarBtn(self.button_names_main)
+        toolbar_buttons_abs     = self.configToobarBtn(self.button_names_abs)
+        toolbar_buttons_regis   = self.configToobarBtn(self.button_names_regis)
 
-        names = [['lucas', '23'], ['rodrigo', '26'], ['andre', '25'], ['emerson', '13'], ['ericka', '21']]
-        layout = [[sg.Table(values=names, headings=['Name', 'Idade'], num_rows=len(names), select_mode=True)],
-                  [sg.Frame('', toolbar_buttons)]]
+# Layout
+        layout = [
+                    [sg.Text("Escolha uma das opções abaixo")],
+                    [sg.Frame('', toolbar_buttons_init)]
+                 ]
 
-        self.window = sg.Window('Window Title', location=(800, 600)).Layout(layout)
+        abastecerLayout = [
+                            [sg.Text("Escolha uma das opções abaixo")],
+                            [sg.Frame('', toolbar_buttons_abs)]
+                          ]
 
+        registroLayout = [
+                            [sg.Text("Cadastre conforme é pedido:")],
+                            [sg.Frame('', toolbar_buttons_regis)]
+                         ]
+
+# Windows
+        self.window = sg.Window('Posto LAR', location=(800, 600)).Layout(layout)
+
+# Read Window
         while True:
 
             button, value = self.window.Read()
-            if button == 'Close' or button is None:
-                self.window.Close()
-                break  # exit button clicked
-            elif button == 'Create':
-                answer = sg.PopupYesNo('Are you sure?')
-                print(answer)
+            if button == 'Registro':
+                self.window = sg.Window('Posto LAR', location=(800, 600)).Layout(registroLayout)
 
-                if answer == 'Yes':
-                    sg.PopupError("Opps! something it's wrong")
+            elif button == 'Abastecer':
+                self.window = sg.Window('Posto LAR', location=(800, 600)).Layout(abastecerLayout)
+                button, value = self.window.Read()
             else:
-                print(button)
+                self.window.Close()
+                break
 
 teste = Gui()
 teste.show()
