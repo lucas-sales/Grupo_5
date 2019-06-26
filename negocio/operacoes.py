@@ -195,17 +195,104 @@ def deleteRegiao(cod_regiao):
     finally:
         connection.close()
 
+#crud funcionario
+def createFuncionario(matricula, nome, data_nascimento, cpf):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'INSERT INTO `funcionario` VALUES (%s, %s, %s, %s);'
+            cursor.execute(sql, (matricula, nome, data_nascimento, cpf))
+        connection.commit()
+    finally:
+        connection.close()
 
+def selectAllFuncionario():
+    try:
+        with connection.cursor() as cursor:
+            sql = 'SELECT * FROM `funcionario`;'
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+    finally:
+        connection.close()
 
+def selectFuncionarioByMatricula(matricula):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'SELECT * FROM `funcionario` WHERE matricula=%s;'
+            cursor.execute(sql, (matricula))
+            result = cursor.fetchall()
+            return result
+    finally:
+        connection.close()
 
+#crud cliente
+def createCliente(nome):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'INSERT INTO `cliente` VALUES (%s);'
+            cursor.execute(sql, (nome))
+        connection.commit()
+    finally:
+        connection.close()
 
+def createPessoaJuridica(codCliente, razaoSocial, cnpj, tipoOrganizacao):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'INSERT INTO `pessoafisica` VALUES (%s, %s, %s, %s);'
+            cursor.execute(sql, (codCliente, razaoSocial, cnpj, tipoOrganizacao))
+        connection.commit()
+    finally:
+        connection.close()
 
+def createPessoaFisica(codCliente, cpf, rg, dataNascimento):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'INSERT INTO `pessoajuridica` VALUES (%s, %s, %s, %s);'
+            cursor.execute(sql, (codCliente, cpf, rg, dataNascimento))
+        connection.commit()
+    finally:
+        connection.close()  
 
+def selectAllCliente():
+    try:
+        with connection.cursor() as cursor:
+            sql = 'SELECT * FROM `cliente`;'
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+    finally:
+        connection.close()
 
+def selectClienteByCodCliente(codCliente):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'SELECT * FROM `cliente` WHERE cod_cliente=%s;'
+            cursor.execute(sql, (codCliente))
+            result = cursor.fetchall()
+            return result
+    finally:
+        connection.close()
 
+#crud combustivel
+def selectCombustivelByNome(nomeCombustivel):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'SELECT * FROM `tipocombustivel` WHERE nome=%s;'
+            cursor.execute(sql, (nomeCombustivel))
+            result = cursor.fetchall()
+            return result
+    finally:
+        connection.close()
 
-
-
+def selectCombustivelById(idCombustivel):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'SELECT * FROM `tipocombustivel` WHERE id_combustivel=%s;'
+            cursor.execute(sql, (idCombustivel))
+            result = cursor.fetchall()
+            return result
+    finally:
+        connection.close()
 
 
 
