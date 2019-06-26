@@ -7,7 +7,7 @@ class Gui:
     def __init__(self):
         self.BUTTON_PATH = '.'
         self.button_names_main = ('Abastecer', 'Registro', 'Close')
-        self.button_names_abs = ('Matricula', 'Cliente', 'Veiculo','Combustivel', 'Preço', 'Subtotal', 'Voltar')
+        self.button_names_abs = ('Voltar','Calcular','Finalizar')
         self.button_names_regis = ()
         self.window = None
 
@@ -34,9 +34,20 @@ class Gui:
                     [sg.Frame('', toolbar_buttons_init)]
                  ]
 
+        # chamar do banco o combustivel e preço
+        preco = str(3.84)
+        combustivel = 'Gasolina'
+
         abastecerLayout = [
-                            [sg.Text("Escolha uma das opções abaixo")],
-                            [sg.Frame('', toolbar_buttons_abs)]
+                            [sg.Text("Escolha uma das opções abaixo:")],
+                            [sg.Text('Matricula:'),sg.InputText('', key='Matricula')],
+                            [sg.Text('Veiculo:'), sg.InputText('', key='Veiculo')],
+                            [sg.Text('Cliente:'), sg.InputText('', key='Cliente')],
+                            [sg.Text('Combustivel:'), sg.Text(text=combustivel, key='Combustivel')],
+                            [sg.Text('Preço:'), sg.Text(text=preco, key='Preco')],
+                            [sg.Text('Quantidade:'), sg.InputText('', key='Quantidade')],
+                            [sg.Text('Subtotal:'), sg.Text('', key='SubTotal')],
+                            [sg.Frame('', toolbar_buttons_abs)],
                           ]
 
         registroLayout = [
@@ -45,49 +56,47 @@ class Gui:
                          ]
 
 # Windows
-        self.window = sg.Window('Posto LAR', location=(800, 600)).Layout(layout)
+        self.window = sg.Window('Posto LAR', location=(600, 450), size=(400, 400)).Layout(layout)
 
 # Read Window
         while True:
 
             button, value = self.window.Read()
-            if button == 'Registro':
-                self.window.Close()
-                self.window = sg.Window('Posto LAR', location=(800, 600)).Layout(registroLayout)
+            try:
 
-            elif button == 'Abastecer':
-                self.window.Close()
-                self.window = sg.Window('Posto LAR', location=(800, 600)).Layout(abastecerLayout)
+                print("")
+            except:
+                print("here")
+            finally:
 
-            elif button == 'Matricula':
-                print("Aqui")
+                if button == 'Registro':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', location=(600, 450), size=(400, 400)).Layout(registroLayout)
 
-            elif button == 'Cliente':
-                print("Aqui")
+                elif button == 'Abastecer':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', location=(600, 450), size=(400, 400)).Layout(abastecerLayout)
 
-            elif button == 'Veiculo':
-                print("Aqui")
+                elif button == 'Voltar':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', location=(600, 450), size=(400, 400)).Layout(layout)
 
-            elif button == 'Combustivel':
-                print("Aqui")
+                elif button == 'Calcular':
+                    novoPreco = float(value['Quantidade']) * float(preco)
+                    self.window.Element('SubTotal').Update(novoPreco)
 
-            elif button == 'Preço':
-                print("Aqui")
 
-            elif button == 'SubTotal':
-                print("Aqui")
+                elif button == 'Finalizar':
 
-            elif button == 'Voltar':
-                self.window.Close()
-                self.window = sg.Window('Posto LAR', location=(800, 600)).Layout(layout)
+                    print("Aqui")
 
-            elif button == 'Close':
-                self.window.Close()
-                break
+                elif button == 'Close':
+                    self.window.Close()
+                    break
 
-            else:
-                self.window.Close()
-                break
+                else:
+                    self.window.Close()
+                    break
 
 teste = Gui()
 teste.show()
