@@ -1,5 +1,4 @@
-#from negocio import operacoes
-
+from negocio import operacoes
 import PySimpleGUIQt as sg
 import os
 
@@ -56,7 +55,10 @@ class Gui:
                             [sg.Frame('', toolbar_buttons_regis)]
                          ]
 # nesta tupla ficará todos os combustiveis + preços
-        names = [['gasolina', '4.75'], ['alcool', '3.28'], ['diesel', '4.55'], ['gas', '2.10'], ['ração', '7.38']]
+        combustiveis = operacoes.selectAllCombustivel()
+        names = []
+        for combustivel in combustiveis:
+            names.append([combustivel['nome'], str(combustivel['preco'])])
         tableLayout = [
             [sg.Table(values=names,
                       enable_events=False,

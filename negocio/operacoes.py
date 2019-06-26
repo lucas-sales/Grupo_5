@@ -274,6 +274,17 @@ def selectClienteByCodCliente(codCliente):
         connection.close()
 
 #crud combustivel
+def selectAllCombustivel():
+    try:
+        with connection.cursor() as cursor:
+            sql = 'SELECT * FROM `tipocombustivel`;'
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+    finally:
+        connection.close()
+
+
 def selectCombustivelByNome(nomeCombustivel):
     try:
         with connection.cursor() as cursor:
