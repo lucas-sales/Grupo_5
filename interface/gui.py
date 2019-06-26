@@ -36,7 +36,6 @@ class Gui:
                     [sg.Frame('', toolbar_buttons_init)]
                  ]
 
-        # chamar do banco o combustivel e preço
         preco = None
         combustivell = None
 
@@ -113,7 +112,6 @@ class Gui:
                     novoPreco = float(value['Quantidade']) * float(combustivel[1])
                     self.window.Element('SubTotal').Update(novoPreco)
 
-
                 elif button == 'Finalizar':
 
                     print("Aqui")
@@ -121,11 +119,6 @@ class Gui:
                 elif button == 'Close':
                     self.window.Close()
                     break
-
-                else:
-                    self.window.Close()
-                    break
-
 
 teste = Gui()
 teste.show()
