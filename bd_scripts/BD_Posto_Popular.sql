@@ -25,16 +25,16 @@ INSERT INTO Funcionario(matricula, nome, data_nascimento, cpf) VALUES
 ('017', 'Sabrina Pessoa Bulhões', '1978-12-01', '01234567219'),
 ('018', 'Neusa Liliane da Fonseca Barbosa', '1992-09-08', '01228367891');
 
-INSERT INTO Cliente(nome) VALUES
-('Aurélio Brito de Paula'),
-('Vanessa dos Santos Cavalcanti'),
-('Gabriela Maria Ferreira Pinto'),
-('Roberto Carneiro Pessoa'),
-('João Paulo Carvalho Nunes'),
-('Bruna Fernandes Acioly'),
-('Diana Gabrielle Damaceno'),
-('Prefeitura da Cidade dos Rios'),
-('Hospital Central da Cidade');
+INSERT INTO Cliente(nome, tipo) VALUES
+('Aurélio Brito de Paula', 'pf'),
+('Vanessa dos Santos Cavalcanti', 'pf'),
+('Gabriela Maria Ferreira Pinto', 'pf'),
+('Roberto Carneiro Pessoa', 'pf'),
+('João Paulo Carvalho Nunes', 'pf'),
+('Bruna Fernandes Acioly', 'pf'),
+('Diana Gabrielle Damaceno', 'pf'),
+('Prefeitura da Cidade dos Rios', 'pj'),
+('Hospital Central da Cidade', 'pj');
 
 INSERT INTO PessoaJuridica(cod_cliente, razao_social, cnpj, tipo_organizacao) VALUES
 (8, 'Centro do Governo da Cidade', '01293291910291', 'Pública'),

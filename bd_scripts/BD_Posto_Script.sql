@@ -42,6 +42,7 @@ PRIMARY KEY (matricula)
 CREATE TABLE Cliente(
 cod_cliente INTEGER NOT NULL AUTO_INCREMENT,
 nome VARCHAR(40),
+tipo VARCHAR(3),
 PRIMARY KEY (cod_cliente)
 );
 
