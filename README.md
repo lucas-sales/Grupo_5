@@ -9,7 +9,7 @@ Antes de utilizar nosso maravilhoso posto de combustivel, precisamos que você f
 
 Bom dia, boa tarde ou boa noite. Você é um(a) motorista precisando de gasolina em um posto de auto abastecimento chamado LAR. Siga as instruções abaixo e você terá todo o combustivel que desejar.
 
-1- Na tela inicial você precisará cadastrar seu veiculo antes de abastecer, caso ja tenha feito isso clique na opção  "Abastecer"
+1- Na tela inicial você precisará cadastrar seu veiculo antes de abastecer, caso ja tenha feito isso clique na opção  "Abastecer";
 
 1.1 - Preencha as informações para gerar seu cadastro;
 
@@ -31,6 +31,6 @@ Python 3.7
 Pycharm 2019.1.1
 
 bibliotecas:
-- PySimpleGUIQt
-- os
-- pymysql
+- PySimpleGUIQt;
+- os;
+- pymysql;
