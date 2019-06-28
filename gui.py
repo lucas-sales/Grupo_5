@@ -8,6 +8,7 @@ class Gui:
         self.button_names_main = ('Abastecer', 'Registro', 'Close')
         self.button_names_abs = ('Voltar','Calcular','Finalizar')
         self.button_names_regis = ('Ok', 'Cancelar')
+        self.button_names_cliente = ('Física', 'Jurídica', 'Voltar')
         self.window = None
         self.window_popup = None
 
@@ -21,7 +22,7 @@ class Gui:
         return toolbar_buttons
 
     def show(self):
-        width = 1500
+        width = 670
         height = 150
 
         sg.SetOptions(auto_size_buttons=True, margins=(0, 0), button_color=sg.COLOR_SYSTEM_DEFAULT)
@@ -30,6 +31,7 @@ class Gui:
         toolbar_buttons_abs     = self.configToobarBtn(self.button_names_abs)
         toolbar_buttons_regis   = self.configToobarBtn(self.button_names_regis)
         toolbar_buttons_popup   = self.configToobarBtn(self.button_names_regis)
+        toolbar_buttons_register = self.configToobarBtn(self.button_names_cliente)
 
 # Layout
         layout = [
@@ -63,36 +65,73 @@ class Gui:
                             [sg.Frame('', toolbar_buttons_abs)],
                           ]
 
+        registrarPessoaFisicaLayout = [
+                            [sg.Text("Digite as informações respectivas do cliente:")],
+                            [sg.Text('Nome:'),sg.InputText('', key='Nome')],
+                            [sg.Text('CPF:'), sg.InputText('', key='CPF')],
+                            [sg.Text('RG:'), sg.InputText('', key='RG')],
+                            [sg.Text('Data de Nascimento:'), sg.InputText('', key='Data Nascimento')],
+                            [sg.Frame('', toolbar_buttons_abs)],
+                          ]
+
+        registrarPessoaJuridicaLayout = [
+                            [sg.Text("Digite as informações respectivas do cliente:")],
+                            [sg.Text('Nome:'),sg.InputText('', key='Nome')],
+                            [sg.Text('CNPJ:'), sg.InputText('', key='CNPJ')],
+                            [sg.Text('Razão Social:'), sg.InputText('', key='Razao Social')],
+                            [sg.Text('Tipo de Organização:'), sg.InputText('', key='Tipo Organizacao')],
+                            [sg.Frame('', toolbar_buttons_abs)],
+                          ]
+
+        registrarVeiculoLayout = [
+                            [sg.Text("Digite as informações do veículo:")],
+                            [sg.Text('Placa:'),sg.InputText('', key='Placa')],
+                            [sg.Text('Marca:'), sg.InputText('', key='Marca')],
+                            [sg.Text('Modelo:'), sg.InputText('', key='Modelo')],
+                            [sg.Text('Ano:'), sg.InputText('', key='Ano')],
+                            [sg.Frame('', toolbar_buttons_abs)],
+                          ]
+
+        registrarConfirmacao = [
+                            [sg.Text("Deseja registrar um novo cliente?")],
+                            [sg.Frame('', toolbar_buttons_register)]
+                         ]
+
         registroLayout = [
                             [sg.Text("Cadastre conforme é pedido:")],
+                            [sg.Frame('', toolbar_buttons_regis)]
+                         ]
+
+        abastecidoLayout = [
+                            [sg.Text("O carro foi abastecido.")],
                             [sg.Frame('', toolbar_buttons_regis)]
                          ]
 # nesta tupla ficará todos os combustiveis + preços
         combustiveis = operacoes.selectAllCombustivel()
         names = []
         for combustivel in combustiveis:
-            names.append([combustivel['nome'], str(combustivel['preco'])])
+            names.append([combustivel['nome'], str(combustivel['preco']), str(combustivel['id_combustivel'])])
         tableLayout = [
             [sg.Table(values=names,
                       enable_events=False,
                       display_row_numbers=True,
-                      headings=['Combustivel', 'Preço'],
+                      headings=['Combustivel', 'Preço', 'Id'],
                       key='_table_',
                       select_mode=True)],
             [sg.Frame('', toolbar_buttons_popup)]
         ]
 
 # Windows
-        self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(layout)
+        self.window = sg.Window('Posto LAR', size=(300, 300)).Layout(layout)
 
 # Read Window
         x = 0
         while True:
 
             button, value = self.window.Read()
+            print(value)
             try:
                 print()
-
             finally:
 
                 if button == 'Registro':
@@ -107,7 +146,7 @@ class Gui:
                 if button == 'Abastecer':
                     self.window.Close()
 
-                    self.window_popup= sg.Window("Escolha o combustivel",location=(width, height), size=(400, 400)).Layout(tableLayout)
+                    self.window_popup= sg.Window("Escolha o combustivel", location=(width, height), size=(400, 400)).Layout(tableLayout)
                     button_popup,value_popup = self.window_popup.Read()
 
                     if button_popup == 'Ok':
@@ -128,12 +167,54 @@ class Gui:
                     self.window.Element('SubTotal').Update(novoPreco)
 
                 elif button == 'Finalizar':
-
-                    print("Aqui")
+                    novoPreco = float(value['Quantidade']) * float(combustivel[1])
+                    abastecimentoResult = self.endAbastecimento(value['Cliente'], value['Matricula'], value['Veiculo'], combustivel[2], novoPreco)
+                    self.window = sg.Window('Posto LAR', location=(width, height), size=(400, 400)).Layout(abastecidoLayout)
+                    if abastecimentoResult == 1:
+                        print("Cliente não existe")
+                    if abastecimentoResult == 3:
+                        print("Veículo não existe")
 
                 elif button is None or button == 'Close':
                     self.window.Close()
                     break
+
+    def endAbastecimento(self, cpfCnpj, matricula, placa, idCombustivel, precoFinal):
+        posto_cnpj = operacoes.selectAllPosto()
+        cliente = self.checkIfClienteExists(cpfCnpj)
+        funcionario = self.checkFuncionarioMatricula(matricula)
+        veiculo = self.checkIfVeiculoExists(placa)
+        if cliente and funcionario and veiculo:
+            operacoes.createAbastecimento(posto_cnpj[0]['cnpj_posto'], matricula, placa)
+            operacoes.createAbastecimentoCombustivel(idCombustivel, precoFinal)
+        if not cliente:
+            return 1
+        if not funcionario:
+            return 2
+        if not veiculo:
+            return 3
+        return 0
+
+    def checkIfClienteExists(self, cpfCnpj):
+        cliente = operacoes.selectClienteByCpfCnpj(cpfCnpj)
+        if not cliente:
+            return None
+        else:
+            return cliente
+
+    def checkFuncionarioMatricula(self, matricula):
+        funcionario = operacoes.selectFuncionarioByMatricula(matricula)
+        if not funcionario:
+            return None
+        else:
+            return funcionario
+
+    def checkIfVeiculoExists(self, placa):
+        veiculo = operacoes.selectVeiculoByPlaca(placa)
+        if not veiculo:
+            return None
+        else:
+            return veiculo
 
 teste = Gui()
 teste.show()

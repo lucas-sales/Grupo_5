@@ -9,7 +9,7 @@ def createPosto(cnpj, cod_regiao, nome_bandeira, razao_social, nome_fantasia, te
             cursor.execute(sql, (cnpj, cod_regiao, nome_bandeira, razao_social, nome_fantasia, telefone))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 def selectAllPosto():
     try:
@@ -19,7 +19,7 @@ def selectAllPosto():
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def selectPostoByCnpj(cnpj):
     try:
@@ -29,7 +29,7 @@ def selectPostoByCnpj(cnpj):
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def updatePosto(cnpj_novo, cod_regiao, nome_bandeira, razao_social, nome_fantasia, telefone, cnpj_antigo):
     try:
@@ -38,7 +38,7 @@ def updatePosto(cnpj_novo, cod_regiao, nome_bandeira, razao_social, nome_fantasi
             cursor.execute(sql, (cnpj_novo, cod_regiao, nome_bandeira, razao_social, nome_fantasia, telefone, cnpj_antigo))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 def deletePosto(cnpj):
     try:
@@ -47,7 +47,7 @@ def deletePosto(cnpj):
             cursor.execute(sql, (cnpj))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 #crud bandeira
 def createBandeira(nome, url):
@@ -57,7 +57,7 @@ def createBandeira(nome, url):
             cursor.execute(sql, (nome, url))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 def selectAllBandeira():
     try:
@@ -67,7 +67,7 @@ def selectAllBandeira():
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def selectBandeiraByNome(nome):
     try:
@@ -77,7 +77,7 @@ def selectBandeiraByNome(nome):
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def updateBandeira(nome_novo, url, nome_antigo):
     try:
@@ -86,7 +86,7 @@ def updateBandeira(nome_novo, url, nome_antigo):
             cursor.execute(sql, (nome_novo, url, nome_antigo))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 def deleteBandeira(nome):
     try:
@@ -95,7 +95,7 @@ def deleteBandeira(nome):
             cursor.execute(sql, (nome))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 
 #crud veiculo
@@ -106,7 +106,7 @@ def createVeiculo(placa, marca, modelo, ano):
             cursor.execute(sql, (placa, marca, modelo, ano))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 def selectAllVeiculo():
     try:
@@ -116,7 +116,7 @@ def selectAllVeiculo():
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def selectVeiculoByPlaca(placa):
     try:
@@ -126,7 +126,7 @@ def selectVeiculoByPlaca(placa):
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def updateVeiculo(placa_nova, marca, modelo, ano, placa_antiga):
     try:
@@ -135,7 +135,7 @@ def updateVeiculo(placa_nova, marca, modelo, ano, placa_antiga):
             cursor.execute(sql, (placa_nova, marca, modelo, ano, placa_antiga))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 def deleteVeiculo(placa):
     try:
@@ -144,7 +144,7 @@ def deleteVeiculo(placa):
             cursor.execute(sql, (placa))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 
 #crud regiao
@@ -155,7 +155,7 @@ def createRegiao(cod_regiao, logradouro, numero, complemento, bairro, cidade, es
             cursor.execute(sql, (cod_regiao, logradouro, numero, complemento, bairro, cidade, estado, pais))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 def selectAllRegiao():
     try:
@@ -165,7 +165,7 @@ def selectAllRegiao():
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def selectRegiaoByCod(cod_regiao):
     try:
@@ -175,7 +175,7 @@ def selectRegiaoByCod(cod_regiao):
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def updateRegiao(cod_regiao_novo, logradouro, numero, complemento, bairro, cidade, estado, pais, cod_regiao_antigo):
     try:
@@ -184,7 +184,7 @@ def updateRegiao(cod_regiao_novo, logradouro, numero, complemento, bairro, cidad
             cursor.execute(sql, (cod_regiao_novo, logradouro, numero, complemento, bairro, cidade, estado, pais, cod_regiao_antigo))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 def deleteRegiao(cod_regiao):
     try:
@@ -193,7 +193,7 @@ def deleteRegiao(cod_regiao):
             cursor.execute(sql, (cod_regiao))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 #crud funcionario
 def createFuncionario(matricula, nome, data_nascimento, cpf):
@@ -203,7 +203,7 @@ def createFuncionario(matricula, nome, data_nascimento, cpf):
             cursor.execute(sql, (matricula, nome, data_nascimento, cpf))
         connection.commit()
     finally:
-        connection.close()
+        cursor.close()
 
 def selectAllFuncionario():
     try:
@@ -213,7 +213,7 @@ def selectAllFuncionario():
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def selectFuncionarioByMatricula(matricula):
     try:
@@ -223,35 +223,77 @@ def selectFuncionarioByMatricula(matricula):
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 #crud cliente
-def createCliente(nome):
+def selectClienteByNome(nome):
     try:
         with connection.cursor() as cursor:
-            sql = 'INSERT INTO `cliente` VALUES (%s);'
+            sql = 'SELECT * FROM `cliente` WHERE nome=%s;'
             cursor.execute(sql, (nome))
-        connection.commit()
+            result = cursor.fetchall()
+            return result
     finally:
-        connection.close()
+        cursor.close()
+
+def selectClienteByCpfCnpj(cpfCnpj):
+    result = None
+    if len(cpfCnpj) == 11:
+        try:
+            with connection.cursor() as cursor:
+                sql = 'SELECT * FROM `pessoafisica` WHERE cpf=%s;'
+                cursor.execute(sql, (cpfCnpj))
+                result = cursor.fetchall()
+        finally:
+            cursor.close()
+    else:
+        try:
+            with connection.cursor() as cursor:
+                sql = 'SELECT * FROM `pessoajuridica` WHERE cnpj=%s;'
+                cursor.execute(sql, (cpfCnpj))
+                result = cursor.fetchall()
+        finally:
+            cursor.close()
+    return result
+
+def createCliente(nome):
+    isCliente = selectClienteByNome(nome)
+    if not isCliente:
+        try:
+            with connection.cursor() as cursor:
+                sql = 'INSERT INTO `cliente(nome)` VALUES (%s);'
+                cursor.execute(sql, (nome))
+            connection.commit()
+        finally:
+            cursor.close()
+    else:
+        return None
 
 def createPessoaJuridica(codCliente, razaoSocial, cnpj, tipoOrganizacao):
-    try:
-        with connection.cursor() as cursor:
-            sql = 'INSERT INTO `pessoafisica` VALUES (%s, %s, %s, %s);'
-            cursor.execute(sql, (codCliente, razaoSocial, cnpj, tipoOrganizacao))
-        connection.commit()
-    finally:
-        connection.close()
+    isPessoaJuridica = selectClienteByCpfCnpj(cnpj)
+    if not isPessoaJuridica:
+        try:
+            with connection.cursor() as cursor:
+                sql = 'INSERT INTO `pessoafisica(cod_cliente, razao_social, cnpj, tipo_organizacao)` VALUES (%s, %s, %s, %s);'
+                cursor.execute(sql, (codCliente, razaoSocial, cnpj, tipoOrganizacao))
+            connection.commit()
+        finally:
+            cursor.close()
+    else:
+        return None
 
 def createPessoaFisica(codCliente, cpf, rg, dataNascimento):
-    try:
-        with connection.cursor() as cursor:
-            sql = 'INSERT INTO `pessoajuridica` VALUES (%s, %s, %s, %s);'
-            cursor.execute(sql, (codCliente, cpf, rg, dataNascimento))
-        connection.commit()
-    finally:
-        connection.close()  
+    isPessoaFisica = selectClienteByCpfCnpj(cpf)
+    if not isPessoaFisica:
+        try:
+            with connection.cursor() as cursor:
+                sql = 'INSERT INTO `pessoajuridica(cod_cliente, cpf, rg, data_nascimento)` VALUES (%s, %s, %s, %s);'
+                cursor.execute(sql, (codCliente, cpf, rg, dataNascimento))
+            connection.commit()
+        finally:
+            cursor.close()
+    else:
+        return None
 
 def selectAllCliente():
     try:
@@ -261,7 +303,7 @@ def selectAllCliente():
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def selectClienteByCodCliente(codCliente):
     try:
@@ -271,7 +313,7 @@ def selectClienteByCodCliente(codCliente):
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 #crud combustivel
 def selectAllCombustivel():
@@ -282,7 +324,7 @@ def selectAllCombustivel():
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 
 def selectCombustivelByNome(nomeCombustivel):
@@ -293,7 +335,7 @@ def selectCombustivelByNome(nomeCombustivel):
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 def selectCombustivelById(idCombustivel):
     try:
@@ -303,9 +345,31 @@ def selectCombustivelById(idCombustivel):
             result = cursor.fetchall()
             return result
     finally:
-        connection.close()
+        cursor.close()
 
 
+#crud abastecimento
+def getDateTime():
+    import time
+    timestamp = time.gmtime()
+    timestamp_readable = time.strftime("%Y-%m-%d %H:%M:%S", timestamp)
+    return timestamp_readable
 
+def createAbastecimento(cnpjPosto, matricula, placa):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'INSERT INTO `Abastecimento(cnpj_posto, matricula, placa, data_hora)` VALUES (%s, %s, %s, %s);'
+            cursor.execute(sql, (cnpjPosto, matricula, placa, getDateTime()))
+        connection.commit()
+    finally:
+        cursor.close()
 
+def createAbastecimentoCombustivel(idCombustivel, preco):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'INSERT INTO `AbastecimentoCombustivel(momento, id_combustivel, preco)` VALUES (%s, %s, %s);'
+            cursor.execute(sql, (getDateTime(), idCombustivel, preco))
+        connection.commit()
+    finally:
+        cursor.close()
 
