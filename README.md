@@ -1,4 +1,4 @@
-# Grupo_5
+# Grupo_5 - Posto LAR
 
 Instruções para uso!
 
