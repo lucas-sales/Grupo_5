@@ -95,7 +95,7 @@ PRIMARY KEY (id_combustivel)
 
 CREATE TABLE AbastecimentoCombustivel(
 momento DATETIME,
-cod_operacao INTEGER NOT NULL,
+cod_operacao INTEGER NOT NULL AUTO_INCREMENT,
 id_combustivel INTEGER,
 preco DOUBLE NOT NULL,
 PRIMARY KEY (momento),
