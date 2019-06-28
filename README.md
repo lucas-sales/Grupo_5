@@ -7,7 +7,7 @@ Antes de utilizar nosso maravilhoso posto de combustivel, precisamos que você f
 
 * Execute o script gui.py em um editor python de sua preferencia
 
-Bom dia, boa tarde ou boa noite. Você é um(a) motorista precisando de gasolina em um posto de auto abastecimento. Siga as instruções abaixo e você terá todo o combustivel que desejar.
+Bom dia, boa tarde ou boa noite. Você é um(a) motorista precisando de gasolina em um posto de auto abastecimento chamado LAR. Siga as instruções abaixo e você terá todo o combustivel que desejar.
 
 1- Na tela inicial você precisará cadastrar seu veiculo antes de abastecer, caso ja tenha feito isso clique na opção  "Abastecer"
 
