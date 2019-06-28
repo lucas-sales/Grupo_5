@@ -27,8 +27,8 @@ Bom dia, boa tarde ou boa noite. Você é um(a) motorista precisando de gasolina
 
 # Referencias
 
-interpretador: Python 3.7 
-editor: Pycharm 2019.1.1
+Python 3.7 
+Pycharm 2019.1.1
 
 bibliotecas:
 - PySimpleGUIQt
