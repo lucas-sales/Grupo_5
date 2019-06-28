@@ -22,3 +22,15 @@ Bom dia, boa tarde ou boa noite. Você é um(a) motorista precisando de gasolina
 2.2 - Acione o botão "Calcular", a informação estará no campo "SubTotal";
 
 2.3 - Caso esteja tudo certo, prossiga para a opção "Finalizar". 
+
+
+
+# Referencias
+
+interpretador: Python 3.7 
+editor: Pycharm 2019.1.1
+
+bibliotecas:
+- PySimpleGUIQt
+- os
+- pymysql
