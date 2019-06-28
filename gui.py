@@ -21,6 +21,8 @@ class Gui:
         return toolbar_buttons
 
     def show(self):
+        width = 1500
+        height = 150
 
         sg.SetOptions(auto_size_buttons=True, margins=(0, 0), button_color=sg.COLOR_SYSTEM_DEFAULT)
 
@@ -37,6 +39,17 @@ class Gui:
 
         preco = None
         combustivell = None
+
+        cadastrosLayout = [
+                            [sg.Text('Escolha o que deseja cadastrar:')],
+                            [sg.Button('Funcionario')],
+                            [sg.Button('Combustível')],
+                            [sg.Button('Bandeira')],
+                            [sg.Button('Veículo')],
+                            [sg.Button('Região')],
+                            [sg.Text('')],
+                            [sg.Button('Confirmar'), sg.Button('Sair')]
+        ]
 
         abastecerLayout = [
                             [sg.Text("Escolha uma das opções abaixo:")],
@@ -70,7 +83,7 @@ class Gui:
         ]
 
 # Windows
-        self.window = sg.Window('Posto LAR', location=(600, 450), size=(400, 400)).Layout(layout)
+        self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(layout)
 
 # Read Window
         x = 0
@@ -84,7 +97,7 @@ class Gui:
 
                 if button == 'Registro':
                     self.window.Close()
-                    self.window = sg.Window('Posto LAR', location=(600, 450), size=(400, 400)).Layout(registroLayout)
+                    self.window = sg.Window('Posto LAR', location=(width, height), size=(400, 400)).Layout(cadastrosLayout)
 
                 if x == 1:
                     self.window.Element('Combustivel').Update(combustivell)
@@ -94,7 +107,7 @@ class Gui:
                 if button == 'Abastecer':
                     self.window.Close()
 
-                    self.window_popup= sg.Window("Escolha o combustivel",location=(600, 450), size=(400, 400)).Layout(tableLayout)
+                    self.window_popup= sg.Window("Escolha o combustivel",location=(width, height), size=(400, 400)).Layout(tableLayout)
                     button_popup,value_popup = self.window_popup.Read()
 
                     if button_popup == 'Ok':
@@ -103,12 +116,12 @@ class Gui:
                         combustivell = combustivel[0]
                         self.window_popup.Close()
 
-                    self.window = sg.Window('Posto LAR', location=(600, 450), size=(400, 400)).Layout(abastecerLayout)
+                    self.window = sg.Window('Posto LAR', location=(width, height), size=(400, 400)).Layout(abastecerLayout)
                     x = 1
-
+                
                 elif button == 'Voltar':
                     self.window.Close()
-                    self.window = sg.Window('Posto LAR', location=(600, 450), size=(400, 400)).Layout(layout)
+                    self.window = sg.Window('Posto LAR', location=(width, height), size=(400, 400)).Layout(layout)
 
                 elif button == 'Calcular':
                     novoPreco = float(value['Quantidade']) * float(combustivel[1])
@@ -118,7 +131,7 @@ class Gui:
 
                     print("Aqui")
 
-                elif button == 'Close':
+                elif button is None or button == 'Close':
                     self.window.Close()
                     break
 
