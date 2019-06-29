@@ -13,7 +13,7 @@ Bom dia, boa tarde ou boa noite. Você é um(a) motorista precisando de gasolina
 
 1.1 - Preencha as informações para gerar seu cadastro;
 
-1.2 - escolha o tipo de combustivel que deseja CLICANDO APENAS NO NUMERO DA LINHA e confirme no botão "OK";
+1.2 - escolha o tipo de combustivel que deseja;
 
 2 - Nesta tela você verá alguns campos que nos ajudarão a identificarmos você, preencha-os;
 
