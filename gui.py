@@ -7,11 +7,15 @@ class Gui:
         self.BUTTON_PATH = '.'
         self.button_names_main = ('Abastecer', 'Registro', 'Close')
         self.button_names_abs = ('Voltar','Calcular','Finalizar')
-        self.button_names_abs_veiculo = ('Adicionar', 'Modificar')
+        self.button_names_abs_veiculo = ('Adicionar Veículo', 'Modificar Veículo')
+        self.button_names_abs_veiculo_bd = ('Adicionar', 'Modificar')
         self.button_names_regis_cliente = ('Registrar Cliente', 'Deletar Cliente')
+        self.button_names_regis_cliente_bd = ('Registrar', 'Atualizar', 'Deletar')
         self.button_names_regis = ('Ok', 'Cancelar')
         self.button_names_cliente = ('Pessoa Física', 'Pessoa Jurídica', 'Tentar Novamente')
+        self.button_names_cliente_bd = ('Pessoa Física', 'Pessoa Jurídica', 'Anterior')
         self.button_names_veiculo = ('Novo Veículo', 'Tentar Novamente')
+        self.button_names_veiculo_bd = ('Novo Veículo', 'Anterior')
         self.button_names_regis_funcionario = ('Tentar Novamente', 'Cancelar')
         self.window = None
         self.window_popup = None
@@ -34,12 +38,16 @@ class Gui:
         toolbar_buttons_init = self.configToobarBtn(self.button_names_main)
         toolbar_buttons_abs = self.configToobarBtn(self.button_names_abs)
         toolbar_buttons_abs_veiculo = self.configToobarBtn(self.button_names_abs_veiculo)
+        toolbar_buttons_abs_veiculo_bd = self.configToobarBtn(self.button_names_abs_veiculo_bd)
         toolbar_buttons_regis = self.configToobarBtn(self.button_names_regis)
         toolbar_buttons_popup = self.configToobarBtn(self.button_names_regis)
         toolbar_buttons_register = self.configToobarBtn(self.button_names_cliente)
+        toolbar_buttons_register_bd = self.configToobarBtn(self.button_names_cliente_bd)
         toolbar_buttons_register_veiculo = self.configToobarBtn(self.button_names_veiculo)
+        toolbar_buttons_register_veiculo_bd = self.configToobarBtn(self.button_names_veiculo_bd)
         toolbar_buttons_regis_funcionario = self.configToobarBtn(self.button_names_regis_funcionario)
         toolbar_buttons_regis_cliente = self.configToobarBtn(self.button_names_regis_cliente)
+        toolbar_buttons_regis_cliente_bd = self.configToobarBtn(self.button_names_regis_cliente_bd)
 
 # Layout
         layout = [
@@ -53,8 +61,8 @@ class Gui:
         cadastrosLayout = [
                             [sg.Text('Escolha o que deseja cadastrar:')],
                             [sg.Button('Funcionario')],
-                            [sg.Button('Combustível')],
-                            [sg.Button('Bandeira')],
+                            [sg.Button('Posto')],
+                            [sg.Button('Cliente')],
                             [sg.Button('Veículo')],
                             [sg.Button('Região')],
                             [sg.Text('')],
@@ -91,6 +99,24 @@ class Gui:
                             [sg.Frame('', toolbar_buttons_regis_cliente)],
                           ]
 
+        registrarPessoaFisicaBDLayout = [
+                            [sg.Text("Digite as informações respectivas do cliente:")],
+                            [sg.Text('Nome:'),sg.InputText('', key='Nome')],
+                            [sg.Text('CPF:'), sg.InputText('', key='CPF')],
+                            [sg.Text('RG:'), sg.InputText('', key='RG')],
+                            [sg.Text('Data de Nascimento:'), sg.InputText('', key='Data Nascimento')],
+                            [sg.Frame('', toolbar_buttons_regis_cliente_bd)],
+                          ]
+
+        registrarPessoaJuridicaBDLayout = [
+                            [sg.Text("Digite as informações respectivas do cliente:")],
+                            [sg.Text('Nome:'),sg.InputText('', key='Nome')],
+                            [sg.Text('CNPJ:'), sg.InputText('', key='CNPJ')],
+                            [sg.Text('Razão Social:'), sg.InputText('', key='Razao Social')],
+                            [sg.Text('Tipo de Organização:'), sg.InputText('', key='Tipo Organizacao')],
+                            [sg.Frame('', toolbar_buttons_regis_cliente_bd)],
+                          ]
+
         registrarVeiculoLayout = [
                             [sg.Text("Digite as informações do veículo:")],
                             [sg.Text('CPF do Cliente:'), sg.InputText('', key='CPF Cliente')],
@@ -101,9 +127,24 @@ class Gui:
                             [sg.Frame('', toolbar_buttons_abs_veiculo)],
                           ]
 
+        registrarVeiculoBDLayout = [
+                            [sg.Text("Digite as informações do veículo:")],
+                            [sg.Text('CPF do Cliente:'), sg.InputText('', key='CPF Cliente')],
+                            [sg.Text('Placa:'),sg.InputText('', key='Placa')],
+                            [sg.Text('Marca:'), sg.InputText('', key='Marca')],
+                            [sg.Text('Modelo:'), sg.InputText('', key='Modelo')],
+                            [sg.Text('Ano:'), sg.InputText('', key='Ano')],
+                            [sg.Frame('', toolbar_buttons_abs_veiculo_bd)],
+                          ]
+
         registrarClienteConfirmacaoLayout = [
                             [sg.Text("Cliente não existe no sistema.\nDeseja registrar um novo cliente?")],
                             [sg.Frame('', toolbar_buttons_register)]
+                         ]
+
+        registrarClienteConfirmacaoBDLayout = [
+                            [sg.Text("Deseja registrar um novo cliente?")],
+                            [sg.Frame('', toolbar_buttons_register_bd)]
                          ]
 
         registrarVeiculoConfirmacaoLayout = [
@@ -234,6 +275,18 @@ class Gui:
                 elif button == 'Modificar':
                     self.window.Close()
                     self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecerLayout)
+
+                elif button == 'Cliente':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(registrarClienteConfirmacaoLayout)
+
+                elif button == 'Veículo':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(registrarVeiculoLayout)
+
+                elif button == 'Anterior':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', location=(width, height), size=(400, 400)).Layout(cadastrosLayout)
 
                 elif button is None or button == 'Close':
                     self.window.Close()
