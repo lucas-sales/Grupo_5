@@ -2,18 +2,18 @@
 
 Instruções para uso!
 
+Na pasta negocio > operacoes.py estão as funções responsáveis pelo crud do projeto.
+
 Antes de utilizar nosso maravilhoso posto de combustivel, precisamos que você faça algumas coisas antes:
 * abra o arquivo fonte (Grupo 5)
 
-* Execute o script gui.py em um editor python de sua preferencia
+* Abra o arquivo db.py que está na pasta persistencia. Altere os valores dos campos user e password de acordo com as configurações do seu BD.
+
+* Execute o script gui.py em um editor python de sua preferencia (Eclipse, Visual Studio...)
 
 Bom dia, boa tarde ou boa noite. Você é um(a) motorista precisando de gasolina em um posto de auto abastecimento chamado LAR. Siga as instruções abaixo e você terá todo o combustivel que desejar.
 
-1- Na tela inicial você precisará cadastrar seu veiculo antes de abastecer, caso ja tenha feito isso clique na opção  "Abastecer";
-
-1.1 - Preencha as informações para gerar seu cadastro;
-
-1.2 - escolha o tipo de combustivel que deseja CLICANDO APENAS NO NUMERO DA LINHA e confirme no botão "OK";
+1- escolha o tipo de combustivel que deseja CLICANDO APENAS NO NUMERO DA LINHA e confirme no botão "OK";
 
 2 - Nesta tela você verá alguns campos que nos ajudarão a identificarmos você, preencha-os;
 
@@ -22,6 +22,13 @@ Bom dia, boa tarde ou boa noite. Você é um(a) motorista precisando de gasolina
 2.2 - Acione o botão "Calcular", a informação estará no campo "SubTotal";
 
 2.3 - Caso esteja tudo certo, prossiga para a opção "Finalizar". 
+
+CONSULTA DE ALGUMAS TABELAS
+
+Execute o arquivo teste.py, para consultar algumas tabelas que estão no BD.
+
+1. Clique na tabela que deseja: Funcionário, Veículos, Bandeiras, combustível
+2. Clique em Obter do BD
 
 
 
