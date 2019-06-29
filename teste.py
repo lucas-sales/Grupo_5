@@ -12,6 +12,9 @@ layoutMain = [
               sg.Button('Veículos', size=(100, 30)),
               sg.Button('Bandeiras', size=(100, 30)),
               sg.Button('Combustivel', size=(100, 30))],
+              [sg.Listbox(['gasolina', 'álcool', 'gás'], size=(200, 100), key='listBox')],
+              #[sg.Combo(['Gasolina - R$ 4,20', 'Etanol - R$ 3,80', 'Diesel - R$ 4,12', 'Gás - 3,15'], key='comboBox', size=(200, 20)), sg.Button('Escolher', size=(100, 20))],
+              [sg.Combo([''], key='comboBox', size=(200, 20)), sg.Button('Escolher', size=(100, 20))],
               [sg.Text('')],
               [sg.Button('Sair')]
 ]
@@ -40,14 +43,37 @@ def getDicsAsListOfStrings(ListaDeChavesDoDicionario, listaDeDicionarios):
             chave = chave + 1
     return result
 
+def getDicsAsListOfStrings2(ListaDeChavesDoDicionario, listaDeDicionarios):
+    result = []
+    for dic in listaDeDicionarios:
+        dicAsString = ''
+        chave = 1
+        while chave < len(ListaDeChavesDoDicionario):
+            if chave == 1:
+                dicAsString = str(dic[ListaDeChavesDoDicionario[chave]])
+            elif chave == len(ListaDeChavesDoDicionario) - 1:
+                dicAsString = dicAsString + ' - ' + str(dic[ListaDeChavesDoDicionario[chave]])
+                result.append(dicAsString)
+            else:
+                dicAsString += ' - ' + str(dic[ListaDeChavesDoDicionario[chave]])
+            chave = chave + 1
+    return result
+
 listBoxInput = None
 while True:
     event, values = window.Read()
-    print(event, values)
+    #print(event, values)
 
     if event is None or event == 'Sair':
         print('Ended by hit "close" or "Exit" button.')
         break
+
+    if event == 'Escolher':
+        #print(window.Element('comboBox'))
+        busca = operacoes.selectAllCombustivel()
+        listaEntrada = getDicsAsListOfStrings2(['id_combustivel', 'nome', 'preco'], busca)
+        print(listaEntrada)
+        window.Element('comboBox').Update(listaEntrada)
         
     elif event == 'Funcionários':
         window.Close()

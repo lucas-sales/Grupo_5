@@ -358,7 +358,7 @@ def getDateTime():
 def createAbastecimento(cnpjPosto, matricula, placa):
     try:
         with connection.cursor() as cursor:
-            sql = 'INSERT INTO `Abastecimento(cnpj_posto, matricula, placa, data_hora)` VALUES (%s, %s, %s, %s);'
+            sql = 'INSERT INTO `abastecimento` (cnpj_posto, matricula, placa, data_hora) VALUES (%s, %s, %s, %s);'
             cursor.execute(sql, (cnpjPosto, matricula, placa, getDateTime()))
         connection.commit()
     finally:
@@ -367,7 +367,7 @@ def createAbastecimento(cnpjPosto, matricula, placa):
 def createAbastecimentoCombustivel(idCombustivel, preco):
     try:
         with connection.cursor() as cursor:
-            sql = 'INSERT INTO `AbastecimentoCombustivel(momento, id_combustivel, preco)` VALUES (%s, %s, %s);'
+            sql = 'INSERT INTO `abastecimentocombustivel` (momento, id_combustivel, preco) VALUES (%s, %s, %s);'
             cursor.execute(sql, (getDateTime(), idCombustivel, preco))
         connection.commit()
     finally:

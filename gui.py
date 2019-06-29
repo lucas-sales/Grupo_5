@@ -22,7 +22,7 @@ class Gui:
         return toolbar_buttons
 
     def show(self):
-        width = 670
+        width = 450
         height = 150
 
         sg.SetOptions(auto_size_buttons=True, margins=(0, 0), button_color=sg.COLOR_SYSTEM_DEFAULT)
@@ -60,7 +60,7 @@ class Gui:
                             [sg.Text('Cliente:'), sg.InputText('', key='Cliente')],
                             [sg.Text('Combustivel:'), sg.Text('', key='Combustivel')],
                             [sg.Text('Preço:'), sg.Text('', key='Preco')],
-                            [sg.Text('Quantidade:'), sg.InputText('', key='Quantidade')],
+                            [sg.Text('Quantidade (l):'), sg.InputText('', key='Quantidade')],
                             [sg.Text('Subtotal:'), sg.Text('', key='SubTotal')],
                             [sg.Frame('', toolbar_buttons_abs)],
                           ]
@@ -146,7 +146,7 @@ class Gui:
                 if button == 'Abastecer':
                     self.window.Close()
 
-                    self.window_popup= sg.Window("Escolha o combustivel", location=(width, height), size=(400, 400)).Layout(tableLayout)
+                    self.window_popup= sg.Window("Escolha o combustivel", size=(400, 400)).Layout(tableLayout)
                     button_popup,value_popup = self.window_popup.Read()
 
                     if button_popup == 'Ok':
@@ -155,12 +155,12 @@ class Gui:
                         combustivell = combustivel[0]
                         self.window_popup.Close()
 
-                    self.window = sg.Window('Posto LAR', location=(width, height), size=(400, 400)).Layout(abastecerLayout)
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecerLayout)
                     x = 1
                 
                 elif button == 'Voltar':
                     self.window.Close()
-                    self.window = sg.Window('Posto LAR', location=(width, height), size=(400, 400)).Layout(layout)
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(layout)
 
                 elif button == 'Calcular':
                     novoPreco = float(value['Quantidade']) * float(combustivel[1])
@@ -169,7 +169,7 @@ class Gui:
                 elif button == 'Finalizar':
                     novoPreco = float(value['Quantidade']) * float(combustivel[1])
                     abastecimentoResult = self.endAbastecimento(value['Cliente'], value['Matricula'], value['Veiculo'], combustivel[2], novoPreco)
-                    self.window = sg.Window('Posto LAR', location=(width, height), size=(400, 400)).Layout(abastecidoLayout)
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecidoLayout)
                     if abastecimentoResult == 1:
                         print("Cliente não existe")
                     if abastecimentoResult == 3:
