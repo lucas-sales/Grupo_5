@@ -20,9 +20,9 @@ layoutMain = [
 ]
 
 layoutConsulta = [
-          [sg.Text('Consultas do BD')],
-          [sg.Listbox([], key='listBox')],
-          [sg.Button('Obter do BD'), sg.Button('Sair')]
+	          [sg.Text('Consultas do BD')],
+	          [sg.Listbox([], key='listBox')],
+	          [sg.Button('Obter do BD'), sg.Button('Sair')]
           ]
 
 window = sg.Window('Consulta do BD', size=(width, height)).Layout(layoutMain)

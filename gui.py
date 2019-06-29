@@ -7,8 +7,12 @@ class Gui:
         self.BUTTON_PATH = '.'
         self.button_names_main = ('Abastecer', 'Registro', 'Close')
         self.button_names_abs = ('Voltar','Calcular','Finalizar')
+        self.button_names_abs_veiculo = ('Adicionar', 'Modificar')
+        self.button_names_regis_cliente = ('Registrar Cliente', 'Deletar Cliente')
         self.button_names_regis = ('Ok', 'Cancelar')
-        self.button_names_cliente = ('Física', 'Jurídica', 'Voltar')
+        self.button_names_cliente = ('Pessoa Física', 'Pessoa Jurídica', 'Voltar')
+        self.button_names_veiculo = ('Novo Veículo', 'Modificar Veículo')
+        self.button_names_regis_funcionario = ('Tentar Novamente', 'Cancelar')
         self.window = None
         self.window_popup = None
 
@@ -27,11 +31,15 @@ class Gui:
 
         sg.SetOptions(auto_size_buttons=True, margins=(0, 0), button_color=sg.COLOR_SYSTEM_DEFAULT)
 
-        toolbar_buttons_init    = self.configToobarBtn(self.button_names_main)
-        toolbar_buttons_abs     = self.configToobarBtn(self.button_names_abs)
-        toolbar_buttons_regis   = self.configToobarBtn(self.button_names_regis)
-        toolbar_buttons_popup   = self.configToobarBtn(self.button_names_regis)
+        toolbar_buttons_init = self.configToobarBtn(self.button_names_main)
+        toolbar_buttons_abs = self.configToobarBtn(self.button_names_abs)
+        toolbar_buttons_abs_veiculo = self.configToobarBtn(self.button_names_abs_veiculo)
+        toolbar_buttons_regis = self.configToobarBtn(self.button_names_regis)
+        toolbar_buttons_popup = self.configToobarBtn(self.button_names_regis)
         toolbar_buttons_register = self.configToobarBtn(self.button_names_cliente)
+        toolbar_buttons_register_veiculo = self.configToobarBtn(self.button_names_veiculo)
+        toolbar_buttons_regis_funcionario = self.configToobarBtn(self.button_names_regis_funcionario)
+        toolbar_buttons_regis_cliente = self.configToobarBtn(self.button_names_regis_cliente)
 
 # Layout
         layout = [
@@ -71,7 +79,7 @@ class Gui:
                             [sg.Text('CPF:'), sg.InputText('', key='CPF')],
                             [sg.Text('RG:'), sg.InputText('', key='RG')],
                             [sg.Text('Data de Nascimento:'), sg.InputText('', key='Data Nascimento')],
-                            [sg.Frame('', toolbar_buttons_abs)],
+                            [sg.Frame('', toolbar_buttons_regis_cliente)],
                           ]
 
         registrarPessoaJuridicaLayout = [
@@ -80,21 +88,32 @@ class Gui:
                             [sg.Text('CNPJ:'), sg.InputText('', key='CNPJ')],
                             [sg.Text('Razão Social:'), sg.InputText('', key='Razao Social')],
                             [sg.Text('Tipo de Organização:'), sg.InputText('', key='Tipo Organizacao')],
-                            [sg.Frame('', toolbar_buttons_abs)],
+                            [sg.Frame('', toolbar_buttons_regis_cliente)],
                           ]
 
         registrarVeiculoLayout = [
                             [sg.Text("Digite as informações do veículo:")],
+                            [sg.Text('CPF do Cliente:'), sg.InputText('', key='CPF Cliente')],
                             [sg.Text('Placa:'),sg.InputText('', key='Placa')],
                             [sg.Text('Marca:'), sg.InputText('', key='Marca')],
                             [sg.Text('Modelo:'), sg.InputText('', key='Modelo')],
                             [sg.Text('Ano:'), sg.InputText('', key='Ano')],
-                            [sg.Frame('', toolbar_buttons_abs)],
+                            [sg.Frame('', toolbar_buttons_abs_veiculo)],
                           ]
 
-        registrarConfirmacao = [
-                            [sg.Text("Deseja registrar um novo cliente?")],
+        registrarClienteConfirmacaoLayout = [
+                            [sg.Text("Cliente não existe no sistema.\nDeseja registrar um novo cliente?")],
                             [sg.Frame('', toolbar_buttons_register)]
+                         ]
+
+        registrarVeiculoConfirmacaoLayout = [
+                            [sg.Text("Esse veículo não existe no sistema.\nDeseja criar um novo registro?")],
+                            [sg.Frame('', toolbar_buttons_register_veiculo)]
+                         ]
+
+        funcionarioInexistenteLayout = [
+                            [sg.Text("O número de matrícula do funcionário está incorreto")],
+                            [sg.Frame('', toolbar_buttons_regis_funcionario)]
                          ]
 
         registroLayout = [
@@ -169,15 +188,64 @@ class Gui:
                 elif button == 'Finalizar':
                     novoPreco = float(value['Quantidade']) * float(combustivel[1])
                     abastecimentoResult = self.endAbastecimento(value['Cliente'], value['Matricula'], value['Veiculo'], combustivel[2], novoPreco)
-                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecidoLayout)
-                    if abastecimentoResult == 1:
-                        print("Cliente não existe")
-                    if abastecimentoResult == 3:
-                        print("Veículo não existe")
+                    if abastecimentoResult == 0:
+                        self.window.Close()
+                        self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecidoLayout)
+                    elif abastecimentoResult == 1:
+                        self.window.Close()
+                        self.window = sg.Window('Posto LAR', size=(320, 50)).Layout(funcionarioInexistenteLayout)
+                    elif abastecimentoResult == 2:
+                        self.window.Close()
+                        self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(registrarClienteConfirmacaoLayout)
+                    elif abastecimentoResult == 3:
+                        self.window.Close()
+                        self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(registrarVeiculoConfirmacaoLayout)
+
+                elif button == 'Pessoa Física':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(registrarPessoaFisicaLayout)
+
+                elif button == 'Pessoa Jurídica':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(registrarPessoaJuridicaLayout)
+
+                elif button == 'Registrar Cliente':
+                    self.registerCliente(value)
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecerLayout)
+
+                elif button == 'Novo Veículo':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(registrarVeiculoLayout)
+
+                elif button == 'Modificar Veículo':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(registrarVeiculoLayout)
+
+                elif button == 'Tentar Novamente':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecerLayout)
+
+                elif button == 'Cancelar':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(300, 300)).Layout(layout)
+
+                elif button == 'Adicionar':
+                    self.registerVeiculo(value)
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecerLayout)
+
+                elif button == 'Modificar':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecerLayout)
 
                 elif button is None or button == 'Close':
                     self.window.Close()
                     break
+
+                elif button == 'Ok' or button == 'Voltar':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(300, 300)).Layout(layout)
 
     def endAbastecimento(self, cpfCnpj, matricula, placa, idCombustivel, precoFinal):
         posto_cnpj = operacoes.selectAllPosto()
@@ -187,9 +255,9 @@ class Gui:
         if cliente and funcionario and veiculo:
             operacoes.createAbastecimento(posto_cnpj[0]['cnpj_posto'], matricula, placa)
             operacoes.createAbastecimentoCombustivel(idCombustivel, precoFinal)
-        if not cliente:
-            return 1
         if not funcionario:
+            return 1
+        if not cliente:
             return 2
         if not veiculo:
             return 3
@@ -215,6 +283,18 @@ class Gui:
             return None
         else:
             return veiculo
+
+    def registerCliente(self, data):
+        resultCliente = operacoes.createCliente(data['Nome'])
+        print("resultado id: " + str(resultCliente))
+        if 'CPF' in data:
+            resultPessoaFisica = operacoes.createPessoaFisica(resultCliente, data['CPF'], data['RG'], data['Data Nascimento'])
+        else:
+            resultPessoaJuridica = operacoes.createPessoaJuridica(resultCliente, data['Razao Social'], data['CNPJ'], data['Tipo Organizacao'])
+
+    def registerVeiculo(self, data):
+        codCliente = operacoes.selectClienteByCpfCnpj(data['CPF Cliente'])
+        result = operacoes.createVeiculo(data['Placa'], codCliente[0]['cod_cliente'], data['Marca'], data['Modelo'], data['Ano'])
 
 teste = Gui()
 teste.show()

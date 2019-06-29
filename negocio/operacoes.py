@@ -99,11 +99,11 @@ def deleteBandeira(nome):
 
 
 #crud veiculo
-def createVeiculo(placa, marca, modelo, ano):
+def createVeiculo(placa, codCliente, marca, modelo, ano):
     try:
         with connection.cursor() as cursor:
-            sql = 'INSERT INTO `veiculo` VALUES (%s, %s, %s, %s);'
-            cursor.execute(sql, (placa, marca, modelo, ano))
+            sql = 'INSERT INTO `veiculo` (placa, cod_cliente, marca, modelo, ano) VALUES (%s, %s, %s, %s, %s);'
+            cursor.execute(sql, (placa, codCliente, marca, modelo, ano))
         connection.commit()
     finally:
         cursor.close()
@@ -258,23 +258,24 @@ def selectClienteByCpfCnpj(cpfCnpj):
 
 def createCliente(nome):
     isCliente = selectClienteByNome(nome)
+    id = None
     if not isCliente:
         try:
             with connection.cursor() as cursor:
-                sql = 'INSERT INTO `cliente(nome)` VALUES (%s);'
+                sql = 'INSERT INTO `cliente` (nome) VALUES (%s);'
                 cursor.execute(sql, (nome))
             connection.commit()
+            id = cursor.lastrowid
         finally:
             cursor.close()
-    else:
-        return None
+    return id
 
 def createPessoaJuridica(codCliente, razaoSocial, cnpj, tipoOrganizacao):
     isPessoaJuridica = selectClienteByCpfCnpj(cnpj)
     if not isPessoaJuridica:
         try:
             with connection.cursor() as cursor:
-                sql = 'INSERT INTO `pessoafisica(cod_cliente, razao_social, cnpj, tipo_organizacao)` VALUES (%s, %s, %s, %s);'
+                sql = 'INSERT INTO `pessoajuridica` (cod_cliente, razao_social, cnpj, tipo_organizacao) VALUES (%s, %s, %s, %s);'
                 cursor.execute(sql, (codCliente, razaoSocial, cnpj, tipoOrganizacao))
             connection.commit()
         finally:
@@ -287,7 +288,7 @@ def createPessoaFisica(codCliente, cpf, rg, dataNascimento):
     if not isPessoaFisica:
         try:
             with connection.cursor() as cursor:
-                sql = 'INSERT INTO `pessoajuridica(cod_cliente, cpf, rg, data_nascimento)` VALUES (%s, %s, %s, %s);'
+                sql = 'INSERT INTO `pessoafisica` (cod_cliente, cpf, rg, data_nascimento) VALUES (%s, %s, %s, %s);'
                 cursor.execute(sql, (codCliente, cpf, rg, dataNascimento))
             connection.commit()
         finally:
@@ -373,3 +374,23 @@ def createAbastecimentoCombustivel(idCombustivel, preco):
     finally:
         cursor.close()
 
+
+def selectAllAbastecimento():
+    try:
+        with connection.cursor() as cursor:
+            sql = 'SELECT * FROM `abastecimento`;'
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+    finally:
+        cursor.close()
+
+def selectAllAbastecimentoCombustivel():
+    try:
+        with connection.cursor() as cursor:
+            sql = 'SELECT * FROM `abastecimentocombustivel`;'
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+    finally:
+        cursor.close()

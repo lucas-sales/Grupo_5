@@ -1,4 +1,4 @@
 from negocio import operacoes
 
 
-print(operacoes.selectAllPosto())
+print(operacoes.selectClienteByCpfCnpj('10218859406'))
