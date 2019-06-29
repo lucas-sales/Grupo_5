@@ -10,8 +10,8 @@ class Gui:
         self.button_names_abs_veiculo = ('Adicionar', 'Modificar')
         self.button_names_regis_cliente = ('Registrar Cliente', 'Deletar Cliente')
         self.button_names_regis = ('Ok', 'Cancelar')
-        self.button_names_cliente = ('Pessoa Física', 'Pessoa Jurídica', 'Voltar')
-        self.button_names_veiculo = ('Novo Veículo', 'Modificar Veículo')
+        self.button_names_cliente = ('Pessoa Física', 'Pessoa Jurídica', 'Tentar Novamente')
+        self.button_names_veiculo = ('Novo Veículo', 'Tentar Novamente')
         self.button_names_regis_funcionario = ('Tentar Novamente', 'Cancelar')
         self.window = None
         self.window_popup = None
@@ -215,10 +215,6 @@ class Gui:
                     self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecerLayout)
 
                 elif button == 'Novo Veículo':
-                    self.window.Close()
-                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(registrarVeiculoLayout)
-
-                elif button == 'Modificar Veículo':
                     self.window.Close()
                     self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(registrarVeiculoLayout)
 
