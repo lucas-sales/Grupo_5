@@ -316,6 +316,15 @@ def selectClienteByCodCliente(codCliente):
     finally:
         cursor.close()
 
+def deleteFuncionario(matricula):
+    try:
+        with connection.cursor() as cursor:
+            sql = 'DELETE FROM `funcionario` WHERE matricula=%s;'
+            cursor.execute(sql, (matricula))
+        connection.commit()
+    finally:
+        cursor.close()
+
 #crud combustivel
 def selectAllCombustivel():
     try:
@@ -389,6 +398,16 @@ def selectAllAbastecimentoCombustivel():
     try:
         with connection.cursor() as cursor:
             sql = 'SELECT * FROM `abastecimentocombustivel`;'
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+    finally:
+        cursor.close()
+
+def verRegistros(registroName):
+    try:
+        with connection.cursor() as cursor:
+            sql = f'SELECT * FROM `{registroName}`;'
             cursor.execute(sql)
             result = cursor.fetchall()
             return result

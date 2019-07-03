@@ -5,7 +5,7 @@ import os
 class Gui:
     def __init__(self):
         self.BUTTON_PATH = '.'
-        self.button_names_main = ('Abastecer', 'Registro', 'Close')
+        self.button_names_main = ('Abastecer', 'Registro', 'Ver Registros', 'Fechar')
         self.button_names_abs = ('Voltar','Calcular','Finalizar')
         self.button_names_abs_veiculo = ('Adicionar', 'Modificar')
         self.button_names_regis_cliente = ('Registrar Cliente', 'Deletar Cliente')
@@ -13,6 +13,16 @@ class Gui:
         self.button_names_cliente = ('Pessoa Física', 'Pessoa Jurídica', 'Tentar Novamente')
         self.button_names_veiculo = ('Novo Veículo', 'Tentar Novamente')
         self.button_names_regis_funcionario = ('Tentar Novamente', 'Cancelar')
+        self.button_names_abs_deletar_funcionario = ('Deletar Registro do Funcionário', 'Voltar para Registro')
+        self.button_names_ver_registros = ('Mostrar Registros', 'Voltar para Início')
+        # botões de crud
+        self.button_names_regis_funcionario_crud = ('Criar Funcionário', 'Atualizar Funcionário', 'Voltar para Registro')
+        self.button_names_regis_cliente_confirmacao_crud = ('Criar/Atualizar Pessoa Física', 'Criar/Atualizar Pessoa Jurídica', 'Voltar para Registro')
+        self.button_names_regis_cliente_crud = ('Criar Cliente', 'Atualizar Cliente', 'Voltar para Registro')
+        self.button_names_regis_bandeira_crud = ('Criar Bandeira', 'Atualizar Bandeira', 'Voltar para Registro')
+        self.button_names_regis_veiculo_crud = ('Criar Veículo', 'Atualizar Veículo', 'Voltar para Registro')
+        self.button_names_regis_combustivel_crud = ('Criar Combustível', 'Atualizar Combustível', 'Voltar para Registro')
+        self.button_names_regis_regiao_crud = ('Criar Região', 'Atualizar Região', 'Voltar para Registro')
         self.window = None
         self.window_popup = None
 
@@ -34,12 +44,22 @@ class Gui:
         toolbar_buttons_init = self.configToobarBtn(self.button_names_main)
         toolbar_buttons_abs = self.configToobarBtn(self.button_names_abs)
         toolbar_buttons_abs_veiculo = self.configToobarBtn(self.button_names_abs_veiculo)
+        toolbar_buttons_abs_deletar_funcionario = self.configToobarBtn(self.button_names_abs_deletar_funcionario)
         toolbar_buttons_regis = self.configToobarBtn(self.button_names_regis)
         toolbar_buttons_popup = self.configToobarBtn(self.button_names_regis)
         toolbar_buttons_register = self.configToobarBtn(self.button_names_cliente)
         toolbar_buttons_register_veiculo = self.configToobarBtn(self.button_names_veiculo)
         toolbar_buttons_regis_funcionario = self.configToobarBtn(self.button_names_regis_funcionario)
         toolbar_buttons_regis_cliente = self.configToobarBtn(self.button_names_regis_cliente)
+        toolbar_buttons_abs_ver_registros = self.configToobarBtn(self.button_names_ver_registros)
+        # config botões crud
+        toolbar_buttons_regis_funcionario_crud = self.configToobarBtn(self.button_names_regis_funcionario_crud)
+        toolbar_buttons_register_cliente_confirmacao_crud = self.configToobarBtn(self.button_names_regis_cliente_confirmacao_crud)
+        toolbar_buttons_regis_cliente_crud = self.configToobarBtn(self.button_names_regis_cliente_crud)
+        toolbar_buttons_regis_bandeira_crud = self.configToobarBtn(self.button_names_regis_bandeira_crud)
+        toolbar_buttons_regis_veiculo_crud = self.configToobarBtn(self.button_names_regis_veiculo_crud)
+        toolbar_buttons_regis_combustivel_crud = self.configToobarBtn(self.button_names_regis_combustivel_crud)
+        toolbar_buttons_regis_regiao_crud = self.configToobarBtn(self.button_names_regis_regiao_crud)
 
 # Layout
         layout = [
@@ -50,17 +70,145 @@ class Gui:
         preco = None
         combustivell = None
 
+        # layouts de escolha
         cadastrosLayout = [
                             [sg.Text('Escolha o que deseja cadastrar:')],
                             [sg.Button('Funcionario')],
-                            [sg.Button('Combustível')],
+                            [sg.Button('Cliente')],
                             [sg.Button('Bandeira')],
                             [sg.Button('Veículo')],
+                            [sg.Button('Combustível')],
                             [sg.Button('Região')],
                             [sg.Text('')],
-                            [sg.Button('Confirmar'), sg.Button('Sair')]
+                            [sg.Text('')],
+                            [sg.Button('Confirmar'), sg.Button('Voltar para Início')]
         ]
 
+        operacoesFuncionarioLayout = [
+                            [sg.Text('Escolha uma operação para fazer:')],
+                            [sg.Button('Criar/Atualizar Funcionário')],
+                            [sg.Button('Deletar Funcionário')],
+                            [sg.Button('Mostrar Funcionário')],
+                            [sg.Button('Mostrar Todos Funcionários')],
+                            [sg.Button('Voltar para Registro')]
+        ]
+
+        operacoesClienteLayout = [
+                            [sg.Text('Escolha uma operação para fazer:')],
+                            [sg.Button('Criar/Atualizar Cliente')],
+                            [sg.Button('Deletar Cliente')],
+                            [sg.Button('Mostrar Cliente')],
+                            [sg.Button('Mostrar Todos Clientes')],
+                            [sg.Button('Voltar para Registro')]
+        ]
+
+        operacoesBandeiraLayout = [
+                            [sg.Text('Escolha uma operação para fazer:')],
+                            [sg.Button('Criar/Atualizar Bandeira')],
+                            [sg.Button('Deletar Bandeira')],
+                            [sg.Button('Mostrar Bandeira')],
+                            [sg.Button('Mostrar Todas Bandeiras')],
+                            [sg.Button('Voltar para Registro')]
+        ]
+
+        operacoesVeiculoLayout = [
+                            [sg.Text('Escolha uma operação para fazer:')],
+                            [sg.Button('Criar/Atualizar Veículo')],
+                            [sg.Button('Deletar Veículo')],
+                            [sg.Button('Mostrar Veículo')],
+                            [sg.Button('Mostrar Todos Veículos')],
+                            [sg.Button('Voltar para Registro')]
+        ]
+
+        operacoesCombustivelLayout = [
+                            [sg.Text('Escolha uma operação para fazer:')],
+                            [sg.Button('Criar/Atualizar Combustível')],
+                            [sg.Button('Deletar Combustível')],
+                            [sg.Button('Mostrar Combustível')],
+                            [sg.Button('Mostrar Todos Combustíveis')],
+                            [sg.Button('Voltar para Registro')]
+        ]
+
+        operacoesRegiaoLayout = [
+                            [sg.Text('Escolha uma operação para fazer:')],
+                            [sg.Button('Criar/Atualizar Região')],
+                            [sg.Button('Deletar Região')],
+                            [sg.Button('Mostrar Região')],
+                            [sg.Button('Mostrar Todas Regiões')],
+                            [sg.Button('Voltar para Registro')]
+        ]
+
+        # layouts de crud
+        registrarAtualizarFuncionarioCrudLayout = [
+                            [sg.Text("Digite as informações respectivas do funcionário:")],
+                            [sg.Text('Nome:'),sg.InputText('', key='Nome')],
+                            [sg.Text('Matrícula:'), sg.InputText('', key='Matricula')],
+                            [sg.Text('CPF:'), sg.InputText('', key='CPF')],
+                            [sg.Text('Data de Nascimento:'), sg.InputText('', key='Data Nascimento')],
+                            [sg.Frame('', toolbar_buttons_regis_funcionario_crud)]
+                          ]
+
+        registrarAtualizarClienteConfirmacaoCrudLayout = [
+                            [sg.Text("Deseja registrar um novo cliente?")],
+                            [sg.Frame('', toolbar_buttons_register_cliente_confirmacao_crud)]
+                        ]
+
+        registrarAtualizarPessoaFisicaCrudLayout = [
+                            [sg.Text("Digite as informações respectivas do cliente:")],
+                            [sg.Text('Nome:'),sg.InputText('', key='Nome')],
+                            [sg.Text('CPF:'), sg.InputText('', key='CPF')],
+                            [sg.Text('RG:'), sg.InputText('', key='RG')],
+                            [sg.Text('Data de Nascimento:'), sg.InputText('', key='Data Nascimento')],
+                            [sg.Frame('', toolbar_buttons_regis_cliente_crud)]
+                          ]
+
+        registrarAtualizarPessoaJuridicaCrudLayout = [
+                            [sg.Text("Digite as informações respectivas do cliente:")],
+                            [sg.Text('Nome:'),sg.InputText('', key='Nome')],
+                            [sg.Text('CNPJ:'), sg.InputText('', key='CNPJ')],
+                            [sg.Text('Razão Social:'), sg.InputText('', key='Razao Social')],
+                            [sg.Text('Tipo de Organização:'), sg.InputText('', key='Tipo Organizacao')],
+                            [sg.Frame('', toolbar_buttons_regis_cliente_crud)]
+                          ]
+
+        registrarAtualizarBandeiraCrudLayout = [
+                            [sg.Text("Digite as informações respectivas do bandeira:")],
+                            [sg.Text('Nome:'),sg.InputText('', key='Nome')],
+                            [sg.Text('URL:'), sg.InputText('', key='URL')],
+                            [sg.Frame('', toolbar_buttons_regis_bandeira_crud)]
+                          ]
+
+        registrarAtualizarVeiculoCrudLayout = [
+                            [sg.Text("Digite as informações respectivas do veículo:")],
+                            [sg.Text('CPF do Cliente:'), sg.InputText('', key='CPF Cliente')],
+                            [sg.Text('Placa Antiga:'),sg.InputText('', key='Placa Antiga')],
+                            [sg.Text('Placa:'),sg.InputText('', key='Placa')],
+                            [sg.Text('Marca:'), sg.InputText('', key='Marca')],
+                            [sg.Text('Modelo:'), sg.InputText('', key='Modelo')],
+                            [sg.Text('Ano:'), sg.InputText('', key='Ano')],
+                            [sg.Frame('', toolbar_buttons_regis_veiculo_crud)]
+                          ]
+
+        registrarAtualizarCombustivelCrudLayout = [
+                            [sg.Text("Digite as informações respectivas do combustível:")],
+                            [sg.Text('Nome:'),sg.InputText('', key='Nome')],
+                            [sg.Text('Preço:'), sg.InputText('', key='Preco')],
+                            [sg.Frame('', toolbar_buttons_regis_combustivel_crud)]
+                          ]
+
+        registrarAtualizarRegiaoCrudLayout = [
+                            [sg.Text("Digite as informações respectivas da região:")],
+                            [sg.Text('Logradouro:'),sg.InputText('', key='Logradouro')],
+                            [sg.Text('Número:'), sg.InputText('', key='Numero')],
+                            [sg.Text('Complemento:'), sg.InputText('', key='Complemento')],
+                            [sg.Text('Bairro:'), sg.InputText('', key='Bairro')],
+                            [sg.Text('Cidade:'), sg.InputText('', key='Cidade')],
+                            [sg.Text('Estado:'), sg.InputText('', key='Estado')],
+                            [sg.Text('País:'), sg.InputText('', key='Pais')],
+                            [sg.Frame('', toolbar_buttons_regis_regiao_crud)]
+                          ]
+
+        # layouts de abastecimento
         abastecerLayout = [
                             [sg.Text("Escolha uma das opções abaixo:")],
                             [sg.Text('Matricula:'),sg.InputText('', key='Matricula')],
@@ -70,7 +218,7 @@ class Gui:
                             [sg.Text('Preço:'), sg.Text('', key='Preco')],
                             [sg.Text('Quantidade (l):'), sg.InputText('', key='Quantidade')],
                             [sg.Text('Subtotal:'), sg.Text('', key='SubTotal')],
-                            [sg.Frame('', toolbar_buttons_abs)],
+                            [sg.Frame('', toolbar_buttons_abs)]
                           ]
 
         registrarPessoaFisicaLayout = [
@@ -79,7 +227,7 @@ class Gui:
                             [sg.Text('CPF:'), sg.InputText('', key='CPF')],
                             [sg.Text('RG:'), sg.InputText('', key='RG')],
                             [sg.Text('Data de Nascimento:'), sg.InputText('', key='Data Nascimento')],
-                            [sg.Frame('', toolbar_buttons_regis_cliente)],
+                            [sg.Frame('', toolbar_buttons_regis_cliente)]
                           ]
 
         registrarPessoaJuridicaLayout = [
@@ -88,17 +236,31 @@ class Gui:
                             [sg.Text('CNPJ:'), sg.InputText('', key='CNPJ')],
                             [sg.Text('Razão Social:'), sg.InputText('', key='Razao Social')],
                             [sg.Text('Tipo de Organização:'), sg.InputText('', key='Tipo Organizacao')],
-                            [sg.Frame('', toolbar_buttons_regis_cliente)],
+                            [sg.Frame('', toolbar_buttons_regis_cliente)]
                           ]
 
         registrarVeiculoLayout = [
                             [sg.Text("Digite as informações do veículo:")],
                             [sg.Text('CPF do Cliente:'), sg.InputText('', key='CPF Cliente')],
+                            [sg.Text('Placa Antiga:'),sg.InputText('', key='Placa')],
                             [sg.Text('Placa:'),sg.InputText('', key='Placa')],
                             [sg.Text('Marca:'), sg.InputText('', key='Marca')],
                             [sg.Text('Modelo:'), sg.InputText('', key='Modelo')],
                             [sg.Text('Ano:'), sg.InputText('', key='Ano')],
-                            [sg.Frame('', toolbar_buttons_abs_veiculo)],
+                            [sg.Frame('', toolbar_buttons_abs_veiculo)]
+                          ]
+
+
+        deletarFuncionarioLayout = [
+                            [sg.Text("Digite a matrícula do funcionário a ser removido:")],
+                            [sg.Text('Matrícula:'), sg.InputText('', key='Matricula')],
+                            [sg.Frame('', toolbar_buttons_abs_deletar_funcionario)]
+                          ]
+
+        verRegistrosLayout = [
+                            [sg.Text("Digite o nome do registro:")],
+                            [sg.Text('Tabela:'), sg.InputText('', key='Tabela')],
+                            [sg.Frame('', toolbar_buttons_abs_ver_registros)]
                           ]
 
         registrarClienteConfirmacaoLayout = [
@@ -235,11 +397,102 @@ class Gui:
                     self.window.Close()
                     self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(abastecerLayout)
 
-                elif button is None or button == 'Close':
+                elif button is None or button == 'Close' or button == 'Sair':
                     self.window.Close()
                     break
 
                 elif button == 'Ok' or button == 'Voltar':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(300, 300)).Layout(layout)
+
+                elif button == 'Confirmar':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(300, 300)).Layout(layout)
+
+                elif button == 'Voltar para Registro':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(400, 400)).Layout(cadastrosLayout)
+
+                #crud do bd
+                elif button == 'Funcionario':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(operacoesFuncionarioLayout)
+
+                elif button == 'Cliente':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(operacoesClienteLayout)
+
+                elif button == 'Bandeira':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(operacoesBandeiraLayout)
+
+                elif button == 'Veículo':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(operacoesVeiculoLayout)
+
+                elif button == 'Combustível':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(operacoesCombustivelLayout)
+
+                elif button == 'Região':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(operacoesRegiaoLayout)
+
+                elif button == 'Criar/Atualizar Funcionário':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(registrarAtualizarFuncionarioCrudLayout)
+
+                elif button == 'Criar/Atualizar Cliente':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(600, 600)).Layout(registrarAtualizarClienteConfirmacaoCrudLayout)
+                    
+                elif button == 'Criar/Atualizar Pessoa Física':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(600, 600)).Layout(registrarAtualizarPessoaFisicaCrudLayout)
+
+                elif button == 'Criar/Atualizar Pessoa Jurídica':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(600, 600)).Layout(registrarAtualizarPessoaJuridicaCrudLayout)
+
+                elif button == 'Criar/Atualizar Bandeira':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(registrarAtualizarBandeiraCrudLayout)
+                    
+                elif button == 'Criar/Atualizar Veículo':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(registrarAtualizarVeiculoCrudLayout)
+                    
+                elif button == 'Criar/Atualizar Combustível':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(registrarAtualizarCombustivelCrudLayout)
+
+                elif button == 'Criar/Atualizar Região':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(registrarAtualizarRegiaoCrudLayout)
+                    
+                elif button == 'Atualizar Veículo':
+                    self.updateVeiculo(value)
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(cadastrosLayout)
+
+                elif button == 'Deletar Funcionário':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(deletarFuncionarioLayout)
+
+                elif button == 'Deletar Registro do Funcionário':
+                    operacoes.deleteFuncionario(value['Matricula'])
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(cadastrosLayout)
+
+                elif button == 'Ver Registros':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(verRegistrosLayout)
+
+                elif button == 'Mostrar Registros':
+                    self.window.Close()
+                    self.window = sg.Window('Posto LAR', size=(500, 500)).Layout(registrosLayout)
+
+                elif button == 'Voltar para Início':
                     self.window.Close()
                     self.window = sg.Window('Posto LAR', size=(300, 300)).Layout(layout)
 
@@ -291,6 +544,12 @@ class Gui:
     def registerVeiculo(self, data):
         codCliente = operacoes.selectClienteByCpfCnpj(data['CPF Cliente'])
         result = operacoes.createVeiculo(data['Placa'], codCliente[0]['cod_cliente'], data['Marca'], data['Modelo'], data['Ano'])
+
+    def updateVeiculo(self, data):
+        operacoes.updateVeiculo(data['Placa'], data['Marca'], data['Modelo'], data['Ano'], data['Placa Antiga'])
+
+    def deleteFuncionario(self, matricula):
+        operacoes.deleteFuncionario(matricula)
 
 teste = Gui()
 teste.show()

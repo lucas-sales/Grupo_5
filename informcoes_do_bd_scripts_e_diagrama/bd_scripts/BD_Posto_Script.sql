@@ -71,7 +71,7 @@ marca VARCHAR(20),
 modelo VARCHAR(20),
 ano VARCHAR(4),
 PRIMARY KEY (placa),
-FOREIGN KEY (cod_cliente) REFERENCES Cliente(cod_cliente)
+FOREIGN KEY (cod_cliente) REFERENCES Cliente(cod_cliente) ON UPDATE CASCADE
 );
 
 CREATE TABLE Abastecimento(
@@ -83,7 +83,7 @@ data_hora DATETIME NOT NULL,
 PRIMARY KEY (cod_operacao),
 FOREIGN KEY (cnpj_posto) REFERENCES Posto(cnpj_posto),
 FOREIGN KEY (matricula) REFERENCES Funcionario(matricula),
-FOREIGN KEY (placa) REFERENCES Veiculo(placa)
+FOREIGN KEY (placa) REFERENCES Veiculo(placa) ON UPDATE CASCADE
 );
 
 CREATE TABLE TipoCombustivel(
