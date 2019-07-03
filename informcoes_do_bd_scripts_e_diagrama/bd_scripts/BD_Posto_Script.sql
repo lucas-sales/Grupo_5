@@ -81,8 +81,8 @@ matricula VARCHAR(10),
 placa VARCHAR(7),
 data_hora DATETIME NOT NULL,
 PRIMARY KEY (cod_operacao),
-FOREIGN KEY (cnpj_posto) REFERENCES Posto(cnpj_posto),
-FOREIGN KEY (matricula) REFERENCES Funcionario(matricula),
+FOREIGN KEY (cnpj_posto) REFERENCES Posto(cnpj_posto) ON DELETE SET NULL,
+FOREIGN KEY (matricula) REFERENCES Funcionario(matricula) ON DELETE SET NULL,
 FOREIGN KEY (placa) REFERENCES Veiculo(placa) ON UPDATE CASCADE
 );
 
